@@ -704,6 +704,7 @@
 }
 
 .contactChip {
+  container-type: inline-size;
   display: flex;
   min-height: 78px;
   align-items: center;
@@ -739,9 +740,12 @@
 
 .contactChip strong {
   min-width: 0;
-  overflow-wrap: anywhere;
-  font-size: clamp(13px, 1.5vw, 17px);
+  flex: 1 1 0;
+  overflow: hidden;
+  font-size: clamp(8px, 3cqi, 17px);
   font-weight: 600;
+  text-overflow: clip;
+  white-space: nowrap;
 }
 
 .contactChip small {
@@ -993,6 +997,12 @@
   }
 }
 
+@media (min-width: 481px) and (max-width: 600px) {
+  .contactActions {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 480px) {
   .header {
     padding-right: 16px;
@@ -1183,17 +1193,9 @@
     padding: 54px 0 52px;
   }
 
-  .contactActions {
-    grid-template-columns: 1fr;
-  }
-
   .contactChip {
     min-height: 70px;
     padding: 10px 14px;
-  }
-
-  .contactChip strong {
-    font-size: 15px;
   }
 
   .contactStar {
