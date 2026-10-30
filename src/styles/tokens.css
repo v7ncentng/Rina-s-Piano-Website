@@ -1,0 +1,32 @@
+:root {
+  color-scheme: light;
+  --paper: #f5f2eb;
+  --ink: #171715;
+  --ink-soft: #625e56;
+  --line: #17171524;
+  --accent: #d94d35;
+  --accent-2: #f1c95d;
+  --accent-3: #3c62d9;
+  --tile: #fffefa;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --fs-xs: .75rem;
+  --fs-sm: .875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: clamp(2.2rem, 5vw, 4.25rem);
+  --fs-hero: clamp(5.2rem, 17.5vw, 14rem);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+  --space-7: 112px;
+  --radius-sm: 6px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+  --shadow-sticker: 0 2px 0 #00000014, 0 8px 18px -8px #00000040;
+  --maxw: 1200px;
+}
