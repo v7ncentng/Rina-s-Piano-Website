@@ -205,8 +205,8 @@ function NowPlaying() {
         <audio
           ref={audioRef}
           src={site.player.audioSrc}
-          preload="metadata"
-          onLoadedMetadata={() => {
+          preload="auto"
+          onCanPlay={() => {
             setAudioReady(true)
             setAudioError(false)
           }}
@@ -222,7 +222,6 @@ function NowPlaying() {
         />
         <div className={styles.playerCover} aria-hidden="true"><PianoMark /></div>
         <div className={styles.playerText}>
-          <span className={styles.playerLabel}>{site.interface.nowPracticing}</span>
           <strong>{site.player.title}</strong>
           <span>{site.player.artist}</span>
         </div>
@@ -236,7 +235,7 @@ function NowPlaying() {
         <div className={styles.progressTrack} aria-hidden="true"><span style={{ width: `${progress}%` }} /></div>
       </div>
       <p className={styles.playerNotice} role="status" aria-live="polite">
-        {audioError ? site.interface.audioUnavailable : playing ? site.interface.previewLimit : site.interface.audioHelp}
+        {audioError ? site.interface.audioUnavailable : playing ? site.interface.previewLimit : audioReady ? '' : site.interface.audioLoading}
       </p>
     </>
   )
@@ -297,29 +296,6 @@ function Lessons() {
         ))}
       </ul>
       <p className={styles.lessonNote}>{site.lessons.note}</p>
-    </SectionReveal>
-  )
-}
-
-function Timeline() {
-  return (
-    <SectionReveal className={styles.timelineSection} ariaLabelledBy="timeline-heading">
-      <div className={styles.timelineHeading}>
-        <h2 className={styles.sectionLabel} id="timeline-heading">{site.timeline.label}</h2>
-        <span className={styles.timelineHint} aria-hidden="true">{site.timeline.hint}</span>
-      </div>
-      <div className={styles.timeline} tabIndex={0} aria-label={site.timeline.ariaLabel}>
-        <ol className={styles.timelineList}>
-          {site.timeline.entries.map((entry, index) => (
-            <li className={styles.timelineItem} key={entry.title}>
-              <span className={styles.timelineIndex}>0{index + 1}</span>
-              <span className={styles.timelineDot} aria-hidden="true" />
-              <h3>{entry.title}</h3>
-              <p>{entry.detail}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
     </SectionReveal>
   )
 }
@@ -394,7 +370,6 @@ function App() {
           <NowPlaying />
           <About />
           <Lessons />
-          <Timeline />
           <Contact />
         </div>
       </main>
