@@ -31,7 +31,7 @@ function StickerArt({ type }: { type: StickerType }) {
     return <svg viewBox="0 0 76 88" aria-hidden="true"><path d="m18 75 13-59q2-7 8-7h4q6 0 8 7l13 59q1 6-5 6H23q-6 0-5-6Z" fill="#f1c95d" stroke="#171715" strokeWidth="3" /><path d="m38 57 13-35M28 67h24" stroke="#171715" strokeWidth="4" strokeLinecap="round" /><circle cx="51" cy="22" r="4" fill="#d94d35" /></svg>
   }
   if (type === 'star') {
-    return <svg viewBox="0 0 90 90" aria-hidden="true"><path d="m45 5 10 26 28-2-22 18 9 27-25-15-23 17 7-29L6 30l29 1z" fill="#f1c95d" stroke="#fffefa" strokeWidth="6" strokeLinejoin="round" /><text x="45" y="52" textAnchor="middle" fill="#171715" fontSize="11" fontWeight="700">{site.stickerText.great}</text><text x="45" y="63" textAnchor="middle" fill="#171715" fontSize="9" fontWeight="700">{site.stickerText.job}</text></svg>
+    return <svg viewBox="0 0 90 90" aria-hidden="true"><path d="m45 5 10 26 28-2-22 18 9 27-25-15-23 17 7-29L6 30l29 1z" fill="#f1c95d" stroke="#fffefa" strokeWidth="6" strokeLinejoin="round" /><text x="45" y="44" textAnchor="middle" dominantBaseline="middle" fill="#171715" fontSize="9" fontWeight="700">{site.stickerText.great}</text><text x="45" y="56" textAnchor="middle" dominantBaseline="middle" fill="#171715" fontSize="8" fontWeight="700">{site.stickerText.job}</text></svg>
   }
   if (type === 'keyboard') {
     return <svg viewBox="0 0 170 50" aria-hidden="true"><rect x="3" y="5" width="164" height="40" rx="4" fill="#fffefa" stroke="#171715" strokeWidth="3" /><path d="M26 6v38m24-38v38m24-38v38m24-38v38m24-38v38m24-38v38" stroke="#171715" strokeWidth="2" /><path d="M17 6v22m25-22v22m24-22v22m25-22v22m24-22v22m25-22v22" stroke="#171715" strokeWidth="7" /></svg>
@@ -40,8 +40,10 @@ function StickerArt({ type }: { type: StickerType }) {
     return <svg viewBox="0 0 90 90" aria-hidden="true"><path d="M45 42C23 43 23 10 43 10c4 10 5 18 2 32Zm2 0c-1-20 30-24 32-6-9 5-17 8-32 6Zm-1 3c19-7 33 21 18 31-8-7-13-15-18-31Zm-4-1c13 15-8 39-24 27 3-10 8-18 24-27Zm-2-3C22 53 7 25 22 15c8 7 14 15 18 26Z" fill="#fffefa" stroke="#d94d35" strokeWidth="3" strokeLinejoin="round" /><circle cx="44" cy="44" r="7" fill="#f1c95d" stroke="#171715" strokeWidth="2" /></svg>
   }
   if (type === 'years' || type === 'mtac') {
-    const text = type === 'years' ? <>{site.stickerText.yearsBadge}<tspan x="50" dy="13">{site.stickerText.years}</tspan></> : <>{site.about.membershipAbbreviation}<tspan x="50" dy="13">{site.stickerText.member}</tspan></>
-    return <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" fill={type === 'years' ? '#3c62d9' : '#d94d35'} stroke="#fffefa" strokeWidth="6" /><circle cx="50" cy="50" r="34" fill="none" stroke="#fffefa" strokeWidth="1.5" strokeDasharray="2 3" /><text x="50" y={type === 'years' ? '47' : '48'} textAnchor="middle" fill="#fffefa" fontSize={type === 'years' ? '27' : '17'} fontFamily="Georgia" fontWeight="bold">{text}</text></svg>
+    const text = type === 'years'
+      ? <><tspan x="50" y="44" fontSize="23">{site.stickerText.yearsBadge}</tspan><tspan x="50" y="63" fontSize="12">{site.stickerText.years}</tspan></>
+      : <><tspan x="50" y="46" fontSize="17">{site.about.membershipAbbreviation}</tspan><tspan x="50" y="61" fontSize="12">{site.stickerText.member}</tspan></>
+    return <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" fill={type === 'years' ? '#3c62d9' : '#d94d35'} stroke="#fffefa" strokeWidth="6" /><circle cx="50" cy="50" r="34" fill="none" stroke="#fffefa" strokeWidth="1.5" strokeDasharray="2 3" /><text x="50" textAnchor="middle" dominantBaseline="middle" fill="#fffefa" fontFamily="Georgia" fontWeight="bold">{text}</text></svg>
   }
   return <span className={styles.tapeLabel}>{site.stickerText.practice}</span>
 }
