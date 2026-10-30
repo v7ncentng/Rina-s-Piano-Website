@@ -4,20 +4,27 @@ A responsive, single-page piano lessons website built with React, TypeScript, Vi
 
 ## Run locally
 
-1. Install Node.js 20.19+ or 22.12+.
-2. From the project directory, install dependencies:
+1. Install Node.js (version 20.19+ or 22.12+), which also installs `npm`. On macOS, download and run the LTS installer from [nodejs.org](https://nodejs.org/en/download). Then quit and reopen Terminal.
+2. Verify both commands are available:
+
+   ```sh
+   node -v
+   npm -v
+   ```
+
+3. From the project directory, install dependencies:
 
    ```sh
    npm install
    ```
 
-3. Start the development server:
+4. Start the development server:
 
    ```sh
    npm run dev
    ```
 
-4. Open the local URL printed by Vite (usually `http://localhost:5173`).
+5. Open the local URL printed by Vite (usually `http://localhost:5173`).
 
 Run `npm run build` to create the deployable static site in `dist/`. Run `npm run lint` and `npm run typecheck` for checks.
 
