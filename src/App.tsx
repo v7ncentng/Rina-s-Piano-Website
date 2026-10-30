@@ -155,24 +155,90 @@ function Hero() {
 
 function NowPlaying() {
   const [playing, setPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [audioReady, setAudioReady] = useState(false)
+  const [audioError, setAudioError] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
+
+  const togglePlayback = async () => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    if (playing) {
+      audio.pause()
+      return
+    }
+
+    if (audio.currentTime >= site.player.previewSeconds) audio.currentTime = 0
+    try {
+      await audio.play()
+      setAudioError(false)
+    } catch {
+      setAudioError(true)
+    }
+  }
+
+  const seek = (offset: number) => {
+    const audio = audioRef.current
+    if (!audio) return
+    const duration = Number.isFinite(audio.duration)
+      ? Math.min(audio.duration, site.player.previewSeconds)
+      : site.player.previewSeconds
+    audio.currentTime = Math.max(0, Math.min(duration, audio.currentTime + offset))
+  }
+
+  const updatePlayback = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    const time = Math.min(audio.currentTime, site.player.previewSeconds)
+    setProgress((time / site.player.previewSeconds) * 100)
+    if (time >= site.player.previewSeconds) {
+      audio.pause()
+      audio.currentTime = site.player.previewSeconds
+      setPlaying(false)
+    }
+  }
 
   return (
-    <div className={styles.playerWrap}>
-      <div className={styles.playerCover} aria-hidden="true"><PianoMark /></div>
-      <div className={styles.playerText}>
-        <span className={styles.playerLabel}>{site.interface.nowPracticing}</span>
-        <strong>{site.player.title}</strong>
-        <span>{site.player.artist}</span>
+    <>
+      <div className={styles.playerWrap}>
+        <audio
+          ref={audioRef}
+          src={site.player.audioSrc}
+          preload="metadata"
+          onLoadedMetadata={() => {
+            setAudioReady(true)
+            setAudioError(false)
+          }}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onTimeUpdate={updatePlayback}
+          onEnded={() => setPlaying(false)}
+          onError={() => {
+            setAudioReady(false)
+            setPlaying(false)
+            setAudioError(true)
+          }}
+        />
+        <div className={styles.playerCover} aria-hidden="true"><PianoMark /></div>
+        <div className={styles.playerText}>
+          <span className={styles.playerLabel}>{site.interface.nowPracticing}</span>
+          <strong>{site.player.title}</strong>
+          <span>{site.player.artist}</span>
+        </div>
+        <div className={styles.playerActions}>
+          <button type="button" className={styles.playerButton} aria-label={site.interface.rewindTwoSeconds} onClick={() => seek(-site.player.seekSeconds)} disabled={!audioReady}>↶</button>
+          <button type="button" className={`${styles.playerButton} ${styles.playButton}`} aria-label={playing ? site.interface.pause : site.interface.play} onClick={togglePlayback} disabled={!audioReady}>
+            {playing ? 'Ⅱ' : '▶'}
+          </button>
+          <button type="button" className={styles.playerButton} aria-label={site.interface.forwardTwoSeconds} onClick={() => seek(site.player.seekSeconds)} disabled={!audioReady}>↷</button>
+        </div>
+        <div className={styles.progressTrack} aria-hidden="true"><span style={{ width: `${progress}%` }} /></div>
       </div>
-      <div className={styles.playerActions}>
-        <button type="button" className={styles.playerButton} aria-label={site.interface.previousPiece} onClick={() => setPlaying(false)}>‹</button>
-        <button type="button" className={`${styles.playerButton} ${styles.playButton}`} aria-label={playing ? site.interface.pause : site.interface.play} onClick={() => setPlaying((value) => !value)}>
-          {playing ? 'Ⅱ' : '▶'}
-        </button>
-        <button type="button" className={styles.playerButton} aria-label={site.interface.nextPiece} onClick={() => setPlaying(false)}>›</button>
-      </div>
-      <div className={`${styles.progressTrack} ${playing ? styles.isPlaying : ''}`} aria-hidden="true"><span /></div>
-    </div>
+      <p className={styles.playerNotice} role="status" aria-live="polite">
+        {audioError ? site.interface.audioUnavailable : playing ? site.interface.previewLimit : site.interface.audioHelp}
+      </p>
+    </>
   )
 }
 
@@ -284,20 +350,22 @@ function Contact() {
       <div>
         <p className={styles.sectionLabel}>{site.contact.label}</p>
         <h2 id="contact-heading">{site.contact.heading}</h2>
-        <p className={styles.contactPrompt}>{site.contact.prompt}</p>
+        <p className={styles.contactPrompt}>{site.interface.contactPrompt}</p>
         <div className={styles.contactActions}>
-          <a className={`${styles.contactChip} ${styles.phoneChip}`} href={site.contact.phoneHref}>
-            <span aria-hidden="true">☎</span><strong>{site.contact.phone}</strong><small>{site.interface.callRina}</small>
-          </a>
-          <a className={styles.contactChip} href={site.contact.emailHref}>
-            <span aria-hidden="true">✉</span><strong>{site.contact.email}</strong><small>{site.interface.emailRina}</small>
-          </a>
+          <div className={styles.contactItem}>
+            <a className={`${styles.contactChip} ${styles.phoneChip}`} href={site.contact.phoneHref}>
+              <span aria-hidden="true">☎</span><strong>{site.contact.phone}</strong><small>{site.interface.callRina}</small>
+            </a>
+            <a className={styles.contactActionLink} href={site.contact.textHref}>{site.interface.textRina}</a>
+          </div>
+          <div className={styles.contactItem}>
+            <a className={styles.contactChip} href={site.contact.emailHref}>
+              <span aria-hidden="true">✉</span><strong>{site.contact.email}</strong><small>{site.interface.emailRina}</small>
+            </a>
+            <button type="button" className={styles.contactActionLink} onClick={copyEmail}>{site.interface.copyEmail}</button>
+            <span className={styles.toast} role="status" aria-live="polite">{toast}</span>
+          </div>
         </div>
-        <div className={styles.contactExtras}>
-          <button type="button" onClick={copyEmail}>{site.interface.copyEmail}</button>
-          <a href={site.contact.textHref}>{site.interface.textRina}</a>
-        </div>
-        <span className={styles.toast} role="status" aria-live="polite">{toast}</span>
       </div>
     </SectionReveal>
   )

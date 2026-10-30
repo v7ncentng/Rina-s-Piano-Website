@@ -32,6 +32,10 @@ Run `npm run build` to create the deployable static site in `dist/`. Run `npm ru
 
 Add Rina’s image to `public/` (for example, `public/rina-at-piano.jpg`), then set `about.photoSrc` in `src/content.ts` to `/rina-at-piano.jpg`. The Polaroid placeholder is shown while the value is empty.
 
+## Enable the music preview
+
+The player is configured to read `public/alla-turca-jazz.mp4` and plays only the first 15 seconds; its skip buttons seek by two seconds. The recording is not included. Add an MP4 you have permission to use at that path to enable playback.
+
 ## Deploy
 
 - **Vercel:** Import the GitHub repository, use `npm run build` as the build command, and `dist` as the output directory.
