@@ -146,7 +146,7 @@ function Hero() {
         ))}
         <div className={styles.heroText}>
           <p className={styles.eyebrow}>{site.tagline}</p>
-          <h1 id="hero-title">{site.name}<span className={styles.heroPeriod}>.</span></h1>
+          <h1 id="hero-title">{site.name}</h1>
           <p className={styles.heroIntro}>{site.introduction}</p>
           <a className={styles.heroLink} href="#lessons">{site.interface.findLesson} <span aria-hidden="true">↓</span></a>
         </div>

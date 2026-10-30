@@ -5,7 +5,7 @@ export const site = {
   interface: {
     skipLink: 'Skip to content',
     homeLinkLabel: 'Rina Law, home',
-    headerSubline: 'piano lessons',
+    headerSubline: 'Piano Teacher',
     navigationLabel: 'Main navigation',
     navigation: [
       { label: 'About', href: '#about' },

@@ -147,10 +147,6 @@
   white-space: nowrap;
 }
 
-.heroPeriod {
-  color: var(--accent);
-}
-
 .heroIntro {
   max-width: 430px;
   margin: 26px auto 16px;
